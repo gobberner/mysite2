@@ -31,8 +31,5 @@ public class UpdateFormAction implements Action {
 		UserVo vo = new UserDao().get(no);
 		request.setAttribute("auth", vo);
 		WebUtils.forward(request, response, "/WEB-INF/views/user/updateform.jsp");
-	
 	}
-	
-	
 }

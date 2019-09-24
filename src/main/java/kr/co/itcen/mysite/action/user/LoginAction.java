@@ -27,7 +27,6 @@ public class LoginAction implements Action {
 			WebUtils.forward(request, response, "/WEB-INF/views/user/loginform.jsp");
 			return;
 		}
-
 		// 인증처리(Session 처리)
 		HttpSession session = request.getSession(true); //없으면 만들어서 줘~
 		session.setAttribute("authUser", userVo);
