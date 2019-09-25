@@ -39,11 +39,18 @@
 						<c:if test ="${vo.o_no ne 1 }">
 							<img src = "${pageContext.servletContext.contextPath}/assets/images/reply.png"/>
 						</c:if>
-						<a href="${pageContext.servletContext.contextPath }/board?a=view&no=${vo.no}&userNo=${vo.userNo}">${vo.title}</a></td>
+						<c:choose>
+							<c:when test="${vo.status eq 'delete' }">
+								삭제된 글입니다.
+							</c:when>
+							<c:otherwise>
+								<a href="${pageContext.servletContext.contextPath }/board?a=view&no=${vo.no}&userNo=${vo.userNo}">${vo.title}</a></td>
+							</c:otherwise>
+						</c:choose>
 						<td>${vo.name }</td>
 						<td>${vo.hit}</td>
 						<td>${vo.regDate}</td>						
-						<td><c:if test ="${vo.userNo eq authUser.no}"><a href="${pageContext.servletContext.contextPath }/board?a=delete&no=${vo.no}" class="del">삭제</a></c:if></td>
+						<td><a href="${pageContext.servletContext.contextPath }/board?a=delete&no=${vo.no}" class="del">삭제</a></td>
 					</tr>
 					</c:forEach>
 				</table>
@@ -52,7 +59,7 @@
 				<div class="pager">
 					<ul>
 						<c:if test="${pagination.prev }">
-							<li><a href="${pageContext.servletContext.contextPath }/board?key=${param.keyword }&page=${pagination.startPage - 1 }">◀</a></li>
+							<li><a href="${pageContext.servletContext.contextPath }/board?kwd=${param.keyword }&page=${pagination.startPage - 1 }">◀</a></li>
 						</c:if>
 						<c:forEach begin="${pagination.startPage }" end="${pagination.endPage }" var="pg">
 							<c:choose>
@@ -60,13 +67,13 @@
 									<li class="selected">${pg }</li>
 								</c:when>
 								<c:otherwise>
-									<li><a href="${pageContext.servletContext.contextPath }/board?key=${param.keyword }&page=${pg }" >${pg }</a></li>
+									<li><a href="${pageContext.servletContext.contextPath }/board?kwd=${param.keyword }&page=${pg }" >${pg }</a></li>
 								</c:otherwise>
 							</c:choose>
 							
 						</c:forEach>
 						<c:if test="${pagination.next }">
-							<li><a href="${pageContext.servletContext.contextPath }/board?key=${param.keyword }&page=${pagination.endPage + 1 }">▶</a></li>
+							<li><a href="${pageContext.servletContext.contextPath }/board?kwd=${param.keyword }&page=${pagination.endPage + 1 }">▶</a></li>
 						</c:if>
 					</ul>
 				</div>			

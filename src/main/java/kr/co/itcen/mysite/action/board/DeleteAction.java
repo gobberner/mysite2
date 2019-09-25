@@ -18,7 +18,7 @@ public class DeleteAction implements Action {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Long no=Long.parseLong(request.getParameter("no"));
-		BoardVo vo = new BoardDao().getSelect(no);
+		BoardVo vo = new BoardDao().view(no);
 		System.out.println(vo);
 		//new BoardDao().보드번호를 이용해서 유저 정보 뽑아오기
 		HttpSession session = request.getSession();
@@ -31,7 +31,10 @@ public class DeleteAction implements Action {
 			WebUtils.redirect(request,response,request.getContextPath()+"/board");
 			return;
 		}
-		
+		if(authUser.getNo()!=vo.getUserNo()) {
+			WebUtils.redirect(request,response,request.getContextPath()+"/board");
+			return;
+		}
 		new BoardDao().updateStatus(no);
 		WebUtils.redirect(request, response, request.getContextPath()+"/board");
 	}
